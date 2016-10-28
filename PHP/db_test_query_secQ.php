@@ -1,4 +1,6 @@
 <?php
+
+//http://localhost/db_test_query_secQ.php?SecQ1=h@g.com&SecQ2=abcdefgh&SecA1=g@g.com&SecA2=dfjfjj
 // array for JSON response
 $response = array();
  
@@ -18,7 +20,7 @@ if ( isset($_POST['SecQ1']) && isset($_POST['SecQ2']) && isset($_POST['SecA1']) 
  
 
     // mysql inserting a new row
-    $result = mysql_query("INSERT INTO `SECURITY_QUESTION`( Qestion_1, Question_2, Answer_1, Answer_2  ) VALUES( '$SecQ1', '$SecQ2', '$SecA1', '$SecA2' );");
+    $result = mysql_query("INSERT INTO `SECURITY_QUESTION`( Question_1, Question_2, Answer_1, Answer_2  ) VALUES( '$SecQ1', '$SecQ2', '$SecA1', '$SecA2' );");
  
     // check if row inserted or not
     if ($result) {

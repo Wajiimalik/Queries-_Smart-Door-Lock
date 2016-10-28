@@ -9,16 +9,17 @@ CREATE TABLE PASSWORDS
 	Alt_Email_Address VARCHAR(255) NOT NULL,
 	Username VARCHAR(20) NOT NULL,
 	PW VARCHAR(20) NOT NULL,
+	Token VARCHAR(255),
 
 	PRIMARY KEY(Password_ID),
 
-	CONSTRAINT uc_PASSWORDS UNIQUE (Email_Address, Alt_Email_Address , Username)
+	CONSTRAINT uc_PASSWORDS UNIQUE (Email_Address, Alt_Email_Address , Username, Token)
 );
 
 CREATE TABLE SECURITY_QUESTION
 (
 	Sec_Ques_ID TINYINT(1) NOT NULL AUTO_INCREMENT,
-	Qestion_1 VARCHAR(255) NOT NULL,
+	Question_1 VARCHAR(255) NOT NULL,
 	Question_2 VARCHAR(255) NOT NULL,
 	Answer_1 VARCHAR(25) NOT NULL,
 	Answer_2 VARCHAR(25) NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE DEVICE
 
 	PRIMARY KEY(Device_ID),
 
-	CONSTRAINT chk_DEVICE CHECK ( Status in('Close', 'Open') ,
+	CONSTRAINT chk_DEVICE CHECK ( Status in('Close', 'Open')) ,
 
 	UNIQUE (MAC_Address)
 );
@@ -47,7 +48,7 @@ CREATE TABLE DEVICE_NAME
 
 	Name VARCHAR(30) NOT NULL,
 	Description VARCHAR(255),
-	PIN_Code TINYINT(1) NOT NULL,
+	PIN_Code VARCHAR(10) NOT NULL,
 	Device_ID TINYINT(1) NOT NULL,
 
 	PRIMARY KEY(Name_ID),
@@ -85,8 +86,6 @@ CREATE TABLE PHONE
 (
 	Phone_ID TINYINT(1) NOT NULL AUTO_INCREMENT,
 	MAC_Address VARCHAR(45) NOT NULL,
-	IP_Address_Network VARCHAR(45) NOT NULL,
-	IP_Address_Device VARCHAR(45) NOT NULL,
 
 	User_ID TINYINT(1) NOT NULL,
 	Device_ID TINYINT(1) NOT NULL,
@@ -113,7 +112,6 @@ CREATE TABLE FEATURE
 (
 	Feature_ID TINYINT(1) NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(20) NOT NULL,
-	Status VARCHAR(10) NOT NULL DEFAULT 'Absent',
 
 	Port_ID TINYINT(1) NOT NULL,
 	Device_ID TINYINT(1) NOT NULL,
@@ -123,9 +121,22 @@ CREATE TABLE FEATURE
 	FOREIGN KEY (Port_ID) REFERENCES PORT(Port_ID),
 	FOREIGN KEY (Device_ID) REFERENCES DEVICE(Device_ID),
 
-	CONSTRAINT chk_FEATURE CHECK (Name in ('Camera', 'Bell Ring', 'Door Knock', 'Lock Tamper', 'Human Detector') AND Status in ('Present', 'Absent') ),
+	CONSTRAINT chk_FEATURE CHECK (Name in ('Camera', 'Bell Ring', 'Door Knock', 'Lock Tamper', 'Human Detector') ),
 
 	CONSTRAINT uc_FEATURE UNIQUE (Name, Port_ID)
+);
+
+CREATE TABLE User_Feature (
+	UF_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	Status VARCHAR(10) NOT NULL DEFAULT 'Absent',
+		 
+	User_ID INTEGER NOT NULL,
+	Feature_ID INTEGER NOT NULL,
+	
+	FOREIGN KEY(User_ID) REFERENCES User(User_ID),
+	FOREIGN KEY(Feature_ID) REFERENCES FEATURE(Feature_ID),
+
+	CONSTRAINT chk_FEATURE CHECK( Status in ('Present', 'Absent') )
 );
 
 CREATE TABLE ACTION
@@ -139,7 +150,7 @@ CREATE TABLE ACTION
 	PRIMARY KEY(Action_ID),
 	FOREIGN KEY (Phone_ID) REFERENCES PHONE(Phone_ID),
 
-	CHECK (Action_Name in ('Unlock', 'Lock','Ignore') ),
+	CHECK (Action_Name in ('Unlock') ),
 
 	UNIQUE (Time_Marked)
 );
@@ -158,7 +169,7 @@ CREATE TABLE ACTIVITY
 	FOREIGN KEY (Action_ID) REFERENCES ACTION(Action_ID),
 	FOREIGN KEY (Device_ID) REFERENCES DEVICE(Device_ID),
 
-	CHECK (Activity_Name in ('Door Bell Ringed', 'Door Knock', 'Door Tampered', 'Human Detected')),
+	CHECK (Activity_Name in ('Visitor', 'Intruder')),
 
 	CONSTRAINT uc_ACTIVITY UNIQUE (Activity_Name, Time_Marked, Action_ID)
 );

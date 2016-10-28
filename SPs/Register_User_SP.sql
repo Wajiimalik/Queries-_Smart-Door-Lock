@@ -13,6 +13,7 @@ CREATE PROCEDURE register_user_sp
 	IN Alt_Email VARCHAR(255),
 	IN Username VARCHAR(20),
 	IN PW VARCHAR(20),
+	IN Token VARCHAR(255),
 	IN SecQ1 VARCHAR(255),
 	IN SecQ2 VARCHAR(255),
 	IN SecA1 VARCHAR(25),
@@ -20,17 +21,15 @@ CREATE PROCEDURE register_user_sp
 	IN Pin_Code VARCHAR(10),
 	IN Door_Name VARCHAR(30),
 	IN Door_Desc VARCHAR(255),
-	IN Phone_MAC_Addr VARCHAR(40),
-	IN Phone_IP_Public VARCHAR(40),
-	IN Phone_IP_Local VARCHAR(40)
+	IN Phone_MAC_Addr VARCHAR(40)
 )
 
 BEGIN  
 
- 	 INSERT INTO `PASSWORDS`( Email_Address, Alt_Email_Address, Username, PW ) VALUES( Email, Alt_Email, Username, PW );
+ 	 INSERT INTO `PASSWORDS`( Email_Address, Alt_Email_Address, Username, PW, Token ) VALUES( Email, Alt_Email, Username, PW, Token );
  	 SET @current_pw_id = LAST_INSERT_ID();
 
-	 INSERT INTO `SECURITY_QUESTION`( Qestion_1, Question_2, Answer_1, Answer_2  ) VALUES( SecQ1, SecQ2, SecA1, SecA2 );
+	 INSERT INTO `SECURITY_QUESTION`( Question_1, Question_2, Answer_1, Answer_2  ) VALUES( SecQ1, SecQ2, SecA1, SecA2 );
 	 SET @current_secq_id = LAST_INSERT_ID();
 
 	 INSERT INTO `DEVICE`( MAC_Address, IP_Address_Network, IP_Address_Device ) VALUES( 'from pi', 'from pi', 'from pi' );
@@ -42,7 +41,7 @@ BEGIN
 	 INSERT INTO `USER`( FName, LName, City, Country, Password_ID, Sec_Ques_ID, Device_Name_ID ) VALUES( F_Name, L_Name, City, Country, @current_pw_id, @current_secq_id, @current_dev_name_id );
 	 SET @current_user_id= LAST_INSERT_ID();
 
-	 INSERT INTO `PHONE`( MAC_Address, IP_Address_Network, IP_Address_Device, User_ID, Device_ID ) VALUES( Phone_MAC_Addr, Phone_IP_Public, Phone_IP_Local, @current_user_id, @current_dev_id );
+	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID ) VALUES( Phone_MAC_Addr, @current_user_id, @current_dev_id );
 
 /* whole procedure ends with the custom delimiter */
 END$$
