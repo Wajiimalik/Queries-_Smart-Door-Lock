@@ -32,7 +32,7 @@ BEGIN
 	 INSERT INTO `SECURITY_QUESTION`( Question_1, Question_2, Answer_1, Answer_2  ) VALUES( SecQ1, SecQ2, SecA1, SecA2 );
 	 SET @current_secq_id = LAST_INSERT_ID();
 
-	 INSERT INTO `DEVICE`( MAC_Address, IP_Address_Network, IP_Address_Device ) VALUES( 'from pi', 'from pi', 'from pi' );
+	 INSERT INTO `DEVICE`( Status ) VALUES( 'Close' );
 	 SET @current_dev_id = LAST_INSERT_ID();
 
 	 INSERT INTO `DEVICE_NAME`( Name, Description, PIN_Code, Device_ID ) VALUES( Door_Name, Door_Desc, Pin_Code, @current_dev_id );

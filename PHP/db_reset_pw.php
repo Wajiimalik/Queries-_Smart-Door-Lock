@@ -6,7 +6,7 @@ $response = array();
 if ( isset($_POST['New_Password']) && isset($_POST['MAC']) )
 {
     $New_Password = $_POST['New_Password'];
-    $MAC = isset($_POST['MAC']);
+    $MAC = $_POST['MAC'];
  
     // include db connect class
     require_once __DIR__ . '/db_connect.php';
@@ -25,7 +25,7 @@ if ( isset($_POST['New_Password']) && isset($_POST['MAC']) )
     $res1 = mysql_query("SELECT Password_ID FROM `USER` WHERE User_ID = '$User_ID';");  
     $row1 = mysql_fetch_array($res1);
 
-    $PW_ID = $row1["User_ID"];
+    $PW_ID = $row1["Password_ID"];
   
 
     // mysql update cols
