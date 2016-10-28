@@ -116,7 +116,7 @@ CREATE TABLE FEATURE
 	FOREIGN KEY (Port_ID) REFERENCES PORT(Port_ID),
 	FOREIGN KEY (Device_ID) REFERENCES DEVICE(Device_ID),
 
-	CONSTRAINT chk_FEATURE CHECK (Name in ('Camera', 'Bell Ring', 'Door Knock', 'Lock Tamper', 'Human Detector') ),
+	CONSTRAINT chk_FEATURE CHECK (Name in ('Camera', 'Bell Ring', 'Door Knock', 'Lock Tamper', 'Human Detector', 'Obstacle Detector') ),
 
 	CONSTRAINT uc_FEATURE UNIQUE (Name, Port_ID)
 );
@@ -172,3 +172,17 @@ CREATE TABLE ACTIVITY
 );
 
 INSERT INTO `DEVICE`( Status ) VALUES( 'Close' );
+
+INSERT INTO PORT(Port_Color) VALUES('Blue');
+INSERT INTO PORT(Port_Color) VALUES('Yellow');
+INSERT INTO PORT(Port_Color) VALUES('Green');
+INSERT INTO PORT(Port_Color) VALUES('Red');
+INSERT INTO PORT(Port_Color) VALUES('Orange');
+INSERT INTO PORT(Port_Color) VALUES('Purple');
+
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Camera', 1, 1 );
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Bell Ring', 2, 1 );
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Door Knock', 3, 1 );
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Lock Tamper', 4, 1 );
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Human Detector', 5, 1 );
+INSERT INTO FEATURE( Name, Port_ID, Device_ID ) VALUES( 'Obstacle Detector', 6, 1 );
