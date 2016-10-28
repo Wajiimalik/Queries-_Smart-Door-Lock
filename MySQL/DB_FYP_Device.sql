@@ -170,3 +170,5 @@ CREATE TABLE ACTIVITY
 
 	CONSTRAINT uc_ACTIVITY UNIQUE (Activity_Name, Time_Marked, Action_ID)
 );
+
+INSERT INTO `DEVICE`( Status ) VALUES( 'Close' );

@@ -32,16 +32,13 @@ BEGIN
 	 INSERT INTO `SECURITY_QUESTION`( Question_1, Question_2, Answer_1, Answer_2  ) VALUES( SecQ1, SecQ2, SecA1, SecA2 );
 	 SET @current_secq_id = LAST_INSERT_ID();
 
-	 INSERT INTO `DEVICE`( Status ) VALUES( 'Close' );
-	 SET @current_dev_id = LAST_INSERT_ID();
-
-	 INSERT INTO `DEVICE_NAME`( Name, Description, PIN_Code, Device_ID ) VALUES( Door_Name, Door_Desc, Pin_Code, @current_dev_id );
+	 INSERT INTO `DEVICE_NAME`( Name, Description, PIN_Code, Device_ID ) VALUES( Door_Name, Door_Desc, Pin_Code, 1 );
 	 SET @current_dev_name_id= LAST_INSERT_ID();
 
 	 INSERT INTO `USER`( FName, LName, City, Country, Password_ID, Sec_Ques_ID, Device_Name_ID ) VALUES( F_Name, L_Name, City, Country, @current_pw_id, @current_secq_id, @current_dev_name_id );
 	 SET @current_user_id= LAST_INSERT_ID();
 
-	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID ) VALUES( Phone_MAC_Addr, @current_user_id, @current_dev_id );
+	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID ) VALUES( Phone_MAC_Addr, @current_user_id, 1 );
 
 /* whole procedure ends with the custom delimiter */
 END$$
