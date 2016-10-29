@@ -2,7 +2,7 @@
 //http://localhost/db_Status_Tab.php?MAC=C4:3A:BE:53:F5:D1
 // array for JSON response
 $result1 = array();
-$result2 = array();
+//$result2 = array();
 
 // check for required fields
 if ( isset($_GET['MAC']) ) {
@@ -98,11 +98,21 @@ if ( isset($_GET['MAC']) ) {
 			));
 	}
 
-	array_push($result2,
+	array_push($result1,
 		array
 		(
-			"Status" => $Door_Status,
-			"Name" => $Door_Name,
+			"Status" => $Door_Status
+		) );
+
+		array_push($result1,
+		array
+		(
+			"Door_Name" => $Door_Name
+		) );
+
+		array_push($result1,
+		array
+		(
 			"Description" => $Door_Desc
 		) );	
 
@@ -112,6 +122,6 @@ header('Content-Type: application/json');
 
 
 echo json_encode( array("result1"=>$result1) );
-echo json_encode( array("result2"=>$result2) );
+//echo json_encode( array("result2"=>$result2) );
 
 ?>
