@@ -157,7 +157,7 @@ CREATE TABLE ACTIVITY
 	Activity_ID TINYINT(1) NOT NULL AUTO_INCREMENT,
 	Activity_Name VARCHAR(20) NOT NULL,
 	Visitor_Image MEDIUMBLOB NOT NULL,
-	Time_Marked TIMESTAMP NOT NULL,
+	Time_Marked TIMESTAMP NOT NULL DEFAULT NOW(),
 
 	Action_ID TINYINT(1),
 	Device_ID TINYINT(1) NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE ACTIVITY
 
 	CHECK (Activity_Name in ('Visitor', 'Intruder')),
 
-	CONSTRAINT uc_ACTIVITY UNIQUE (Activity_Name, Time_Marked, Action_ID)
+	CONSTRAINT uc_ACTIVITY UNIQUE (Time_Marked, Action_ID)
 );
 
 INSERT INTO `DEVICE`( Status ) VALUES( 'Close' );
