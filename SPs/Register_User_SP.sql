@@ -26,7 +26,7 @@ CREATE PROCEDURE register_user_sp
 
 BEGIN  
 
- 	 INSERT INTO `PASSWORDS`( Email_Address, Alt_Email_Address, Username, PW, Token ) VALUES( Email, Alt_Email, Username, PW, Token );
+ 	 INSERT INTO `PASSWORDS`( Email_Address, Alt_Email_Address, Username, PW ) VALUES( Email, Alt_Email, Username, PW );
  	 SET @current_pw_id = LAST_INSERT_ID();
 
 	 INSERT INTO `SECURITY_QUESTION`( Question_1, Question_2, Answer_1, Answer_2  ) VALUES( SecQ1, SecQ2, SecA1, SecA2 );
@@ -38,7 +38,7 @@ BEGIN
 	 INSERT INTO `USER`( FName, LName, City, Country, Password_ID, Sec_Ques_ID, Device_Name_ID ) VALUES( F_Name, L_Name, City, Country, @current_pw_id, @current_secq_id, @current_dev_name_id );
 	 SET @current_user_id= LAST_INSERT_ID();
 
-	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID ) VALUES( Phone_MAC_Addr, @current_user_id, 1 );
+	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID, Token ) VALUES( Phone_MAC_Addr, @current_user_id, 1, Token );
 
 /* whole procedure ends with the custom delimiter */
 END$$

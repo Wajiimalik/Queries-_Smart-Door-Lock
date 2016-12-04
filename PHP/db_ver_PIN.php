@@ -1,13 +1,12 @@
 <?php
-//http://localhost/db_ver_secQ.php?MAC=abc
-
+//http://localhost/db_ver_secA.php?MAC=abc
 // array for JSON response
 $result = array();
 
 // check for required fields
 if ( isset($_POST['MAC']) ) {
 
-    $MAC = $_POST['MAC']; 
+    $MAC = $_POST['MAC'];  
 	
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';
@@ -21,17 +20,20 @@ if ( isset($_POST['MAC']) ) {
 
 	$User_ID = $row0["User_ID"];
 
+
 	//secqid
-	$res1 = mysql_query("SELECT Sec_Ques_ID FROM `USER` WHERE User_ID = '$User_ID';");  
+	$res1 = mysql_query("SELECT Device_Name_ID FROM `USER` WHERE User_ID = '$User_ID';");  
 	$row1 = mysql_fetch_array($res1);
+    	//echo $row1["Question_1"];
 
-	$SecQ_ID = $row1["Sec_Ques_ID"];
+	$Dev_Name_ID = $row1["Device_Name_ID"];
 
-	//get qs query
-	$res= mysql_query("SELECT Question_1, Question_2 FROM `SECURITY_QUESTION` WHERE Sec_Ques_ID = '$SecQ_ID';");
 
-	//CONDS
-	if (!$SecQ_ID) {
+	//get ans query
+	$res= mysql_query("SELECT PIN_Code FROM `DEVICE_NAME` WHERE Name_ID = '$Dev_Name_ID';");
+
+	//conds
+	if (!$Dev_Name_ID) {
     	echo "Could not successfully get id from user table" . mysql_error();
     	exit;
 	}
@@ -43,31 +45,22 @@ if ( isset($_POST['MAC']) ) {
 
 	$row = mysql_fetch_array($res);
 
-	//CONDS
-	if( is_null( $row["Question_1"] ) )
+	//conds
+	if( is_null( $row["PIN_Code"] ) )
 	{
-		$Q1 = "Not Found Q1!";
+		$PIN= "Not Found A1!";
 	}
 	else
 	{
-		$Q1 = $row["Question_1"];
+		$PIN = $row["PIN_Code"];
 	}
 
-	if( is_null( $row["Question_2"] ) )
-	{
-		$Q2 = "Not Found Q2!";
-	}
-	else
-	{
-		$Q2 = $row["Question_2"];
-	}
 
 //final result
 array_push($result,
 	array
 	(
-		"Question_1" => $Q1,
-		"Question_2" => $Q2
+		"PIN_Code" => $PIN
 	) );	
 }
 

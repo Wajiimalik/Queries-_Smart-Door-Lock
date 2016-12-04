@@ -4,9 +4,9 @@
 //$result = array();
 
 // check for required fields
-if (isset($_GET['Email'])) {
+if (isset($_POST['Email'])) {
 
-    $Email = $_GET['Email'];       
+    $Email = $_POST['Email'];       
 	
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';

@@ -5,9 +5,9 @@
 $result = array();
 
 // check for required fields
-if ( isset($_GET['MAC']) ) {
+if ( isset($_POST['MAC']) ) {
 
-    $MAC = $_GET['MAC'];
+    $MAC = $_POST['MAC'];
 
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';

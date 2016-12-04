@@ -1,17 +1,18 @@
 <?php
-//http://localhost/db_test_val.php?Email=h@g.com&Username=abcdefgh&AltEmail=g@g.com
+//http://localhost/db_val_reg2.php?Email=h@g.com&Username=abcdefgh&AltEmail=g@g.com
 
 // array for JSON response
 $result = array();
 
 // check for required fields
-if ( isset($_GET['Email'])  && isset($_GET['Username']) && isset($_GET['AltEmail'])  ) {
+if ( isset($_POST['Email'])  && isset($_POST['Username']) && isset($_POST['AltEmail'])  ) 
+{
 
-    $Email = $_GET['Email']; 
+    $Email = $_POST['Email']; 
 
-    $Username =  $_GET['Username'];
+    $Username =  $_POST['Username'];
 
-    $AltEmail = ($_GET['AltEmail']);
+    $AltEmail = ($_POST['AltEmail']);
 	
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';
@@ -85,6 +86,16 @@ array_push($result,
 		"Username" => $Username,
 		"Alt_Email_Address" => $AltEmail
 	) );	
+}
+else
+{
+	array_push($result,
+	array
+	(
+		"Email_Address" => "xyz",
+		"Username" => "xyz",
+		"Alt_Email_Address" => "xyz"
+	) );
 }
 
 header('Content-Type: application/json');
