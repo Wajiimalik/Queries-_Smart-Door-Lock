@@ -40,6 +40,14 @@ BEGIN
 
 	 INSERT INTO `PHONE`( MAC_Address, User_ID, Device_ID, Token ) VALUES( Phone_MAC_Addr, @current_user_id, 1, Token );
 
+
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 1 );
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 2 );
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 3 );
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 4 );
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 5 );
+	 INSERT INTO `User_Feature`( Status, User_ID, Feature_ID ) VALUES( 'Present', @current_user_id, 6 );
+
 /* whole procedure ends with the custom delimiter */
 END$$
 
