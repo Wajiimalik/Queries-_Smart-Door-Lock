@@ -1,13 +1,9 @@
 <?php
-//http://localhost/db_Action_Tab.php?MAC=C4:3A:BE:53:F5:D1
+//http://localhost/db_Action_Tab.php
 // array for JSON response
 $result = array();
 
-// check for required fields
-if ( isset($_GET['MAC']) ) {
 
-    $MAC = $_GET['MAC'];  
-	
 	// include db connect class
 	require_once __DIR__ . '/db_connect.php';
 
@@ -15,7 +11,7 @@ if ( isset($_GET['MAC']) ) {
 	$db = new DB_CONNECT();
 
 	//doorstatus
-	$res = mysql_query("SELECT Activity_Name, Visitor_Image, Time_Marked FROM `ACTIVITY` ORDER BY Time_Marked DESC LIMIT 5;");  
+	$res = mysql_query("SELECT ACTION.Time_Marked, USER.FName FROM ACTION INNER JOIN PHONE ON PHONE.Phone_ID=ACTION.Phone_ID INNER JOIN USER ON PHONE.User_ID=USER.User_ID ORDER BY ACTION.Time_Marked DESC LIMIT 10;");  
 
 	//$row = mysql_fetch_array($res);
 
@@ -29,16 +25,18 @@ if ( isset($_GET['MAC']) ) {
 	}
 
 	while($row = mysql_fetch_array($res))
-	{                 
+	{           
+		$NAME = $row[1];
+		$TS = $row[0];
+
+		$OUT = $NAME . " has unlocked the door at " . $TS;
 		array_push($result,
 			array(
-			"Activity_Name" => $row[0],
-			"Visitor_Image" => $row[1],
-			"Time_Marked" => $row[2]
+			"Action" => $OUT
 			));
 	}
 
-}
+
 header('Content-Type: application/json');
 
 
